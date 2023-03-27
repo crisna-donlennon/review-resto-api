@@ -2,18 +2,20 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use app\Models\User;
+use App\Models\User;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 
 class AuthenticationTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
-    public function test_user_can_login()
+    // ini e jangan lupa di use jare mas donny, gaero gae opo
+    use RefreshDatabase;
+
+
+//LOGIN//
+    public function test_user_can_login() 
     {
         $user = User::factory()->createOne();
 
@@ -23,16 +25,21 @@ class AuthenticationTest extends TestCase
             'device_name' => 'testing',
         ];
 
+        // ini bagian testing e
         $this->postJson(route('auth.login'), $data)
+            // assertOk() itu buat mastiin kalo respon yang didapat 200
             ->assertOk()
-            ->assertJsonFragment(['access_token', 'user']);
+            // assertJsonStructure() itu mastiin di responnya ada 'access_token', 'user' (paling se rodok ngarang)
+            ->assertJsonStructure(['access_token', 'user']);
     }
+//LOGIN//
 
+//REGISTER//
     public function test_user_can_register()
     {
         $data = [
-            'name' => 'Tester',
-            'email' => 'tester@email',
+            'name' => 'tester',
+            'email' => 'tester@email.com',
             'password' => 'password',
             'password_confirmation' => 'password',
         ];
@@ -41,7 +48,9 @@ class AuthenticationTest extends TestCase
             ->assertCreated()
             ->assertJsonFragment(['email' => $data['email']]);
     }
+//REGISTER//
 
+//SEE PROFILE//
     public function test_user_can_see_their_profile()
     {
         $user = User::factory()->createOne();
@@ -52,12 +61,16 @@ class AuthenticationTest extends TestCase
             ->assertOk()
             ->assertJsonFragment(['email' => $user->email]);
     }
+//SEE PROFILE//
 
+//CANNOT SEE PROFILE//
     public function test_user_cannot_see_their_profile_when_unauthenticated()
     {
         $this->getJson(route('auth.profile'))->assertUnauthorized();
     }
-    
+//CANNOT SEE PROFILE//
+
+//LOGOUT//
     public function test_user_can_logout()
     {
         $user = User::factory()->createOne();
@@ -66,4 +79,5 @@ class AuthenticationTest extends TestCase
 
         $this->getJson(route('auth.logout'))->assertOk();
     }
+//LOGOUT//
 }
