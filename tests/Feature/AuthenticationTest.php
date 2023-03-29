@@ -4,13 +4,13 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Models\User;
+use Laravel\Sanctum\Sanctum;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Laravel\Sanctum\Sanctum;
 
 class AuthenticationTest extends TestCase
 {
-    // ini e jangan lupa di use jare mas donny, gaero gae opo
+    // ini e jangan lupa di use
     use RefreshDatabase;
 
 
@@ -25,11 +25,11 @@ class AuthenticationTest extends TestCase
             'device_name' => 'testing',
         ];
 
-        // ini bagian testing e
+        // ini bagian testing
         $this->postJson(route('auth.login'), $data)
-            // assertOk() itu buat mastiin kalo respon yang didapat 200
+            // assertOk() itu buat memastikan kalo respon yang didapat 200, memastikan hasil yang kita terima sesuai dengan hasil yang kita minta
             ->assertOk()
-            // assertJsonStructure() itu mastiin di responnya ada 'access_token', 'user' (paling se rodok ngarang)
+            // assertJsonStructure() itu memastikan di responnya ada 'access_token', 'user'
             ->assertJsonStructure(['access_token', 'user']);
     }
 //LOGIN//
