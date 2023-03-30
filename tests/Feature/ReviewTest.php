@@ -13,6 +13,7 @@ class ReviewTest extends TestCase
 {
     use RefreshDatabase;
 
+//LIST RESTO
     public function test_user_can_list_all_resto()
     {
         $count = 5;
@@ -25,7 +26,9 @@ class ReviewTest extends TestCase
             ->assertOk()
             ->assertJsonCount($count);
     }
+//LIST RESTO
 
+//CREATE RESTO
     public function test_user_can_create_resto()
     {
         $data = Review::factory()->makeOne()->toArray();
@@ -37,7 +40,9 @@ class ReviewTest extends TestCase
             ->assertCreated()
             ->assertJsonStructure(array_keys($data));
     }
+//CREATE RESTO
 
+//SHOW RESTO
     public function test_user_can_show_resto()
     {
         $data = Review::factory()->createOne();
@@ -49,7 +54,9 @@ class ReviewTest extends TestCase
             ->assertOk()
             ->assertJsonStructure(array_keys($data->toArray()));
     }
+//SHOW RESTO
 
+//EDIT RESTO
     public function test_user_can_edit_resto()
     {
         // makeOne() tidak masuk ke database
@@ -64,7 +71,9 @@ class ReviewTest extends TestCase
             ->assertOk()
             ->assertJsonStructure(array_keys($updatedData));
     }
+//EDIT RESTO
 
+//DELETE RESTO
     public function test_user_can_delete_resto()
     {
         $data = Review::factory()->createOne();
@@ -76,4 +85,5 @@ class ReviewTest extends TestCase
             ->assertOk()
             ->assertJsonStructure(array_keys($data->toArray()));
     }
+//DELETE RESTO
 }

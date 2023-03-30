@@ -13,6 +13,7 @@ class RestoTest extends TestCase
 {
     use RefreshDatabase;
 
+//LIST RESTO
     public function test_user_can_list_all_resto()
     {
         $count = 5;
@@ -25,7 +26,9 @@ class RestoTest extends TestCase
             ->assertOk()
             ->assertJsonCount($count);
     }
+//LIST RESTO
 
+//CREATE RESTO
     public function test_user_can_create_resto()
     {
         $data = Resto::factory()->makeOne()->toArray();
@@ -35,7 +38,9 @@ class RestoTest extends TestCase
 
         $this->postJson(route('restos.store'), $data)->assertCreated();
     }
+//CREATE RESTO
 
+//SHOW RESTO
     public function test_user_can_show_resto()
     {
         $data = Resto::factory()->createOne();
@@ -47,7 +52,9 @@ class RestoTest extends TestCase
             ->assertOk()
             ->assertJsonStructure(['name', 'description', 'address']);
     }
+//SHOW RESTO
 
+//EDIT RESTO
     public function test_user_can_edit_resto()
     {
         // makeOne() tidak masuk ke database
@@ -62,7 +69,9 @@ class RestoTest extends TestCase
             ->assertOk()
             ->assertJsonStructure(['name', 'description', 'address']);
     }
+//EDIT RESTO
 
+//DELETE RESTO
     public function test_user_can_delete_resto()
     {
         $data = Resto::factory()->createOne();
@@ -74,4 +83,5 @@ class RestoTest extends TestCase
             ->assertOk()
             ->assertJsonStructure(['name', 'description', 'address']);
     }
+//DELETE RESTO
 }
